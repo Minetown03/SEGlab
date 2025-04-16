@@ -5,8 +5,39 @@ function getPrivateKey() {
   const key = process.env.GOOGLE_PRIVATE_KEY;
   if (!key) throw new Error('GOOGLE_PRIVATE_KEY is not defined');
   
-  // Remove any extra quotes and replace literal \n with actual newlines
-  return key.replace(/\\n/g, '\n').replace(/(^"|"$)/g, '');
+  // If the key already has proper line breaks and formatting, return as is
+  if (key.includes('-----BEGIN PRIVATE KEY-----') && key.includes('-----END PRIVATE KEY-----')) {
+    return key;
+  }
+  
+  // For Vercel environment where the key might be escaped differently
+  let cleanKey = key;
+  
+  // Handle the case where the key is wrapped in quotes
+  cleanKey = cleanKey.replace(/(^"|"$)/g, '');
+  
+  // Add line breaks if they're missing
+  if (!cleanKey.includes('\n')) {
+    cleanKey = cleanKey.replace(/\\n/g, '\n');
+  }
+  
+  // Ensure proper header and footer format
+  if (!cleanKey.startsWith('-----BEGIN PRIVATE KEY-----')) {
+    cleanKey = '-----BEGIN PRIVATE KEY-----\n' + cleanKey;
+  }
+  if (!cleanKey.endsWith('-----END PRIVATE KEY-----')) {
+    cleanKey = cleanKey + '\n-----END PRIVATE KEY-----';
+  }
+  
+  // Add debug logging
+  console.log('Private key processing:', {
+    hasHeader: cleanKey.includes('-----BEGIN PRIVATE KEY-----'),
+    hasFooter: cleanKey.includes('-----END PRIVATE KEY-----'),
+    hasNewlines: cleanKey.includes('\n'),
+    length: cleanKey.length
+  });
+  
+  return cleanKey;
 }
 
 export async function POST(req: Request) {
