@@ -6,10 +6,14 @@ import HeroTypewriter from './components/HeroTypewriter';
 
 export default function Home() {
   const [email, setEmail] = useState('');
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitStatus('loading');
+    setErrorMessage('');
+    
     try {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
@@ -17,13 +21,18 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      if (!response.ok) throw new Error('Failed to submit');
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.details || 'Failed to submit');
+      }
 
       setSubmitStatus('success');
       setEmail('');
       setTimeout(() => setSubmitStatus('idle'), 3000);
-    } catch (error) {
+    } catch (error: any) {
       setSubmitStatus('error');
+      setErrorMessage(error.message || 'There was an error. Please try again.');
       console.error('Error submitting email:', error);
     }
   };
@@ -196,18 +205,20 @@ export default function Home() {
                 placeholder="Enter your email"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-light"
                 required
+                disabled={submitStatus === 'loading'}
               />
               <button
                 type="submit"
-                className="w-full bg-primary-medium text-white font-bold py-3 px-6 rounded-lg shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark"
+                className="w-full bg-primary-medium text-white font-bold py-3 px-6 rounded-lg shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={submitStatus === 'loading'}
               >
-                Subscribe
+                {submitStatus === 'loading' ? 'Subscribing...' : 'Subscribe'}
               </button>
               {submitStatus === 'success' && (
                 <p className="text-green-600 mt-2">Thank you for subscribing!</p>
               )}
               {submitStatus === 'error' && (
-                <p className="text-red-600 mt-2">There was an error. Please try again.</p>
+                <p className="text-red-600 mt-2">{errorMessage}</p>
               )}
             </form>
           </div>
