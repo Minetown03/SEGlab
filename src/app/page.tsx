@@ -183,7 +183,7 @@ export default function Home() {
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-10">Ready to Make an Impact?</h2>
             <button 
-              onClick={() => window.open('YOUR_GOOGLE_FORM_URL', '_blank')}
+              onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSeGmjiwfplwltv4AU3qt9X-kvztL7JAjxUloJYB9lXxtX6E9A/viewform?usp=dialog', '_blank')}
               className="bg-primary-medium text-white font-bold py-5 px-12 rounded-full shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark text-xl"
             >
               Take Our Survey
