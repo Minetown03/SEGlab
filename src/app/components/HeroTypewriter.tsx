@@ -50,7 +50,7 @@ export default function HeroTypewriter() {
           <span className={`inline-block w-2 h-8 align-middle ${blink ? 'bg-white' : 'bg-transparent'} ml-1 rounded-sm transition-all duration-200`} />
         </h1>
         <button
-          onClick={() => window.open('YOUR_GOOGLE_FORM_URL', '_blank')}
+          onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSeGmjiwfplwltv4AU3qt9X-kvztL7JAjxUloJYB9lXxtX6E9A/viewform?usp=dialog', '_blank')}
           className="mt-4 px-10 py-4 rounded-full bg-primary-medium text-white font-bold text-lg shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark"
         >
           Take Our Survey
