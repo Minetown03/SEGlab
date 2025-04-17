@@ -145,15 +145,18 @@ export default function Home() {
           {/* Mobile menu overlay */}
           <div
             id="mobile-menu"
-            className={`md:hidden fixed inset-0 z-50 transition-all duration-300 ease-in-out ${
+            className={`md:hidden fixed inset-0 z-[100] transition-all duration-300 ease-in-out ${
               isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
             }`}
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
           >
             {/* Menu content */}
-            <div className={`absolute inset-y-0 right-0 w-72 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${
-              isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}>
+            <div 
+              className={`absolute inset-y-0 right-0 w-72 bg-white shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col ${
+                isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+              }`}
+              style={{ backgroundColor: 'white' }}
+            >
               {/* Menu header with close button */}
               <div className="flex items-center justify-end p-4 border-b border-gray-200 bg-white">
                 <button
@@ -176,7 +179,7 @@ export default function Home() {
               </div>
 
               {/* Menu items with solid background */}
-              <div className="flex flex-col h-full bg-white">
+              <div className="flex-1 flex flex-col bg-white overflow-y-auto">
                 <div className="flex flex-col p-4 space-y-1">
                   <a 
                     href="#about" 
@@ -184,7 +187,7 @@ export default function Home() {
                       handleNavClick(e, 'about');
                       setIsMobileMenuOpen(false);
                     }}
-                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200"
+                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200 bg-white"
                   >
                     {t.nav.about}
                   </a>
@@ -194,7 +197,7 @@ export default function Home() {
                       handleNavClick(e, 'benefits');
                       setIsMobileMenuOpen(false);
                     }}
-                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200"
+                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200 bg-white"
                   >
                     {t.nav.benefits}
                   </a>
@@ -204,14 +207,16 @@ export default function Home() {
                       handleNavClick(e, 'survey');
                       setIsMobileMenuOpen(false);
                     }}
-                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200"
+                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200 bg-white"
                   >
                     {t.nav.survey}
                   </a>
                 </div>
-                
-                {/* Language selector with solid background */}
-                <div className="mt-4 px-4 py-2 border-t border-gray-200 bg-white">
+              </div>
+              
+              {/* Language selector with solid background */}
+              <div className="mt-auto border-t border-gray-200 bg-white">
+                <div className="p-4 bg-white">
                   <LanguageSelector />
                 </div>
               </div>
