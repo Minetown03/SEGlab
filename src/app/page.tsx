@@ -150,63 +150,83 @@ export default function Home() {
             }`}
           >
             {/* Semi-transparent backdrop */}
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+            <div 
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
             
             {/* Menu content */}
-            <div className={`absolute inset-y-0 right-0 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${
+            <div className={`absolute inset-y-0 right-0 w-72 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${
               isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
             }`}>
-              {/* Close button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
-                aria-label="Close menu"
-              >
-                <svg
-                  className="w-6 h-6 text-primary-dark"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              {/* Menu header with logo and close button */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
+                <Image
+                  src="/logo.png"
+                  alt="SegTech Logo"
+                  width={120}
+                  height={40}
+                  className="w-auto h-8"
+                  priority
+                  quality={100}
+                  style={{ objectFit: 'contain' }}
+                />
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                  aria-label="Close menu"
                 >
-                  <path d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+                  <svg
+                    className="w-6 h-6 text-gray-600"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
 
-              <div className="flex flex-col items-start pt-16 px-6 h-full">
-                <a 
-                  href="#about" 
-                  onClick={(e) => {
-                    handleNavClick(e, 'about');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="py-3 text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out w-full border-b border-gray-200"
-                >
-                  {t.nav.about}
-                </a>
-                <a 
-                  href="#benefits" 
-                  onClick={(e) => {
-                    handleNavClick(e, 'benefits');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="py-3 text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out w-full border-b border-gray-200"
-                >
-                  {t.nav.benefits}
-                </a>
-                <a 
-                  href="#survey" 
-                  onClick={(e) => {
-                    handleNavClick(e, 'survey');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="py-3 text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out w-full border-b border-gray-200"
-                >
-                  {t.nav.survey}
-                </a>
-                <div className="mt-4 w-full">
+              {/* Menu items */}
+              <div className="flex flex-col h-full bg-white">
+                <div className="flex flex-col p-4 space-y-1">
+                  <a 
+                    href="#about" 
+                    onClick={(e) => {
+                      handleNavClick(e, 'about');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200"
+                  >
+                    {t.nav.about}
+                  </a>
+                  <a 
+                    href="#benefits" 
+                    onClick={(e) => {
+                      handleNavClick(e, 'benefits');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200"
+                  >
+                    {t.nav.benefits}
+                  </a>
+                  <a 
+                    href="#survey" 
+                    onClick={(e) => {
+                      handleNavClick(e, 'survey');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="px-4 py-3 text-lg text-primary-dark hover:bg-primary-light/10 rounded-lg transition-colors duration-200"
+                  >
+                    {t.nav.survey}
+                  </a>
+                </div>
+                
+                {/* Language selector */}
+                <div className="mt-4 px-4 py-2 border-t border-gray-200 bg-white">
                   <LanguageSelector />
                 </div>
               </div>
