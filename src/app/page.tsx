@@ -3,8 +3,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import HeroTypewriter from './components/HeroTypewriter';
+import LanguageSelector from './components/LanguageSelector';
+import { useLanguage } from './context/LanguageContext';
 
 export default function Home() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -73,22 +76,23 @@ export default function Home() {
                 onClick={(e) => handleNavClick(e, 'about')}
                 className="text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out"
               >
-                About
+                {t.nav.about}
               </a>
               <a 
                 href="#benefits" 
                 onClick={(e) => handleNavClick(e, 'benefits')}
                 className="text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out"
               >
-                Benefits
+                {t.nav.benefits}
               </a>
               <a 
                 href="#survey" 
                 onClick={(e) => handleNavClick(e, 'survey')}
                 className="text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out"
               >
-                Survey
+                {t.nav.survey}
               </a>
+              <LanguageSelector />
             </div>
           </div>
         </div>
@@ -99,12 +103,12 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="py-20 bg-background-light scroll-mt-28 border-b border-gray-200">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-10">About SegTech</h2>
-            <p className="text-lg text-gray-700">
-              SegTech is an innovative platform that leverages cutting-edge technology to transform how businesses approach market segmentation. Our solution provides actionable insights and data-driven strategies to help companies better understand and reach their target audiences.
-            </p>
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-10">{t.about.title}</h2>
+            <div className="text-lg text-gray-700 space-y-6 whitespace-pre-wrap px-4 md:px-0">
+              {t.about.description}
+            </div>
           </div>
         </div>
       </section>
@@ -112,19 +116,19 @@ export default function Home() {
       {/* Why SegTech Matters */}
       <section className="py-20 bg-white scroll-mt-28 border-b border-gray-200">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-14 text-center">Why SegTech Matters</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-14 text-center">{t.whyMatters.title}</h2>
           <div className="grid md:grid-cols-3 gap-8 justify-center">
             <div className="p-6 bg-background-light rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-gray-300">
-              <h3 className="text-xl font-semibold text-primary-dark mb-4">Data Overload</h3>
-              <p className="text-gray-700">Businesses struggle to make sense of vast amounts of customer data.</p>
+              <h3 className="text-xl font-semibold text-primary-dark mb-4">{t.whyMatters.dataOverload.title}</h3>
+              <p className="text-gray-700">{t.whyMatters.dataOverload.description}</p>
             </div>
             <div className="p-6 bg-background-light rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-gray-300">
-              <h3 className="text-xl font-semibold text-primary-dark mb-4">Inefficient Targeting</h3>
-              <p className="text-gray-700">Traditional segmentation methods often miss key market opportunities.</p>
+              <h3 className="text-xl font-semibold text-primary-dark mb-4">{t.whyMatters.inefficientTargeting.title}</h3>
+              <p className="text-gray-700">{t.whyMatters.inefficientTargeting.description}</p>
             </div>
             <div className="p-6 bg-background-light rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-gray-300">
-              <h3 className="text-xl font-semibold text-primary-dark mb-4">Limited Insights</h3>
-              <p className="text-gray-700">Current solutions fail to provide actionable, real-time market insights.</p>
+              <h3 className="text-xl font-semibold text-primary-dark mb-4">{t.whyMatters.limitedInsights.title}</h3>
+              <p className="text-gray-700">{t.whyMatters.limitedInsights.description}</p>
             </div>
           </div>
         </div>
@@ -133,45 +137,21 @@ export default function Home() {
       {/* Survey Benefits */}
       <section id="benefits" className="py-20 bg-background-light scroll-mt-28 border-b border-gray-200">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-14 text-center">Survey Benefits</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-14 text-center">{t.benefits.title}</h2>
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <ul className="space-y-4">
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
+              {t.benefits.items.slice(0, 4).map((item, index) => (
+                <div key={index} className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
                   <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Help shape the future of market segmentation</span>
-                </li>
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
+                  <span className="text-gray-700">{item}</span>
+                </div>
+              ))}
+              {t.benefits.items.slice(4).map((item, index) => (
+                <div key={index + 4} className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
                   <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Get early access to our platform</span>
-                </li>
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-                  <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Receive exclusive insights and updates</span>
-                </li>
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-                  <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Join our community of industry leaders</span>
-                </li>
-              </ul>
-              <ul className="space-y-4">
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-                  <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Influence product features and roadmap</span>
-                </li>
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-                  <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Get priority support and onboarding</span>
-                </li>
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-                  <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Access to beta tools and experiments</span>
-                </li>
-                <li className="flex items-start bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-                  <span className="text-primary-light mr-3 text-xl">✓</span>
-                  <span className="text-gray-700">Be featured as an early adopter partner</span>
-                </li>
-              </ul>
+                  <span className="text-gray-700">{item}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -181,12 +161,12 @@ export default function Home() {
       <section id="survey" className="py-20 bg-white scroll-mt-28 border-b border-gray-200">
         <div className="container">
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-10">Ready to Make an Impact?</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-10">{t.cta.title}</h2>
             <button 
               onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSeGmjiwfplwltv4AU3qt9X-kvztL7JAjxUloJYB9lXxtX6E9A/viewform?usp=dialog', '_blank')}
               className="bg-primary-medium text-white font-bold py-5 px-12 rounded-full shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark text-xl"
             >
-              Take Our Survey
+              {t.cta.button}
             </button>
           </div>
         </div>
@@ -196,29 +176,28 @@ export default function Home() {
       <section className="py-16 bg-gradient-to-r from-background-light to-white">
         <div className="container">
           <div className="max-w-md mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-10">Stay Updated</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-10">{t.newsletter.title}</h2>
             <form onSubmit={handleEmailSubmit} className="space-y-4">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-light"
+                placeholder={t.newsletter.placeholder}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-medium focus:border-transparent"
                 required
-                disabled={submitStatus === 'loading'}
               />
               <button
                 type="submit"
-                className="w-full bg-primary-medium text-white font-bold py-3 px-6 rounded-lg shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={submitStatus === 'loading'}
+                className="w-full bg-primary-medium text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {submitStatus === 'loading' ? 'Subscribing...' : 'Subscribe'}
+                {submitStatus === 'loading' ? '...' : t.newsletter.button}
               </button>
               {submitStatus === 'success' && (
-                <p className="text-green-600 mt-2">Thank you for subscribing!</p>
+                <p className="text-green-600">{t.newsletter.success}</p>
               )}
               {submitStatus === 'error' && (
-                <p className="text-red-600 mt-2">{errorMessage}</p>
+                <p className="text-red-600">{errorMessage || t.newsletter.error}</p>
               )}
             </form>
           </div>

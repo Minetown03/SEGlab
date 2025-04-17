@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
-
-const PHRASES = [
-  'Revolutionizing Segmentation.',
-  'Optimizing Customer Lifetime Value.',
-  'Delivering Smarter CRM Tools.',
-  'Unlocking Behavioral Insights.'
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function HeroTypewriter() {
+  const { t } = useLanguage();
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [displayed, setDisplayed] = useState('');
   const [deleting, setDeleting] = useState(false);
@@ -15,7 +10,7 @@ export default function HeroTypewriter() {
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    const phrase = PHRASES[currentPhrase];
+    const phrase = t.hero.phrases[currentPhrase];
 
     if (!deleting && displayed.length < phrase.length) {
       timeout = setTimeout(() => {
@@ -30,11 +25,11 @@ export default function HeroTypewriter() {
     } else if (deleting && displayed.length === 0) {
       timeout = setTimeout(() => {
         setDeleting(false);
-        setCurrentPhrase((prev) => (prev + 1) % PHRASES.length);
+        setCurrentPhrase((prev) => (prev + 1) % t.hero.phrases.length);
       }, 700);
     }
     return () => clearTimeout(timeout);
-  }, [displayed, deleting, currentPhrase]);
+  }, [displayed, deleting, currentPhrase, t.hero.phrases]);
 
   // Blinking cursor effect
   useEffect(() => {
@@ -53,7 +48,7 @@ export default function HeroTypewriter() {
           onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSeGmjiwfplwltv4AU3qt9X-kvztL7JAjxUloJYB9lXxtX6E9A/viewform?usp=dialog', '_blank')}
           className="mt-4 px-10 py-4 rounded-full bg-primary-medium text-white font-bold text-lg shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark"
         >
-          Take Our Survey
+          {t.hero.cta}
         </button>
       </div>
     </section>
