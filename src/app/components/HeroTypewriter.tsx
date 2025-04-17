@@ -40,13 +40,13 @@ export default function HeroTypewriter() {
   return (
     <section className="w-full min-h-[60vh] flex flex-col items-center justify-center bg-gradient-to-b from-primary-light via-primary-medium to-primary-dark px-4">
       <div className="flex flex-col items-center justify-center text-center">
-        <h1 className="font-custom font-bold text-white text-2xl sm:text-3xl md:text-5xl lg:text-6xl mb-8 drop-shadow-xl">
+        <h1 className="font-custom font-bold text-white text-4xl sm:text-4xl md:text-5xl lg:text-6xl mb-8 drop-shadow-xl">
           {displayed}
-          <span className={`inline-block w-2 h-8 align-middle ${blink ? 'bg-white' : 'bg-transparent'} ml-1 rounded-sm transition-all duration-200`} />
+          <span className={`inline-block w-2 h-8 sm:h-10 md:h-12 align-middle ${blink ? 'bg-white' : 'bg-transparent'} ml-1 rounded-sm transition-all duration-200`} />
         </h1>
         <button
           onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSeGmjiwfplwltv4AU3qt9X-kvztL7JAjxUloJYB9lXxtX6E9A/viewform?usp=dialog', '_blank')}
-          className="mt-4 px-10 py-4 rounded-full bg-primary-medium text-white font-bold text-lg shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark"
+          className="mt-4 px-10 py-4 rounded-full bg-primary-medium text-white font-bold text-lg sm:text-xl shadow-2xl border border-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-dark"
         >
           {t.hero.cta}
         </button>

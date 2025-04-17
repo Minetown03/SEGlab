@@ -152,13 +152,13 @@ export default function Home() {
           >
             {/* Menu content */}
             <div 
-              className={`absolute inset-y-0 right-0 w-72 bg-white shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col ${
+              className={`fixed inset-y-0 right-0 w-72 bg-white shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col ${
                 isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
               }`}
-              style={{ backgroundColor: 'white' }}
+              style={{ backgroundColor: 'white', zIndex: 101 }}
             >
               {/* Menu header with close button */}
-              <div className="flex items-center justify-end p-4 border-b border-gray-200 bg-white">
+              <div className="relative flex items-center justify-end p-4 border-b border-gray-200 bg-white">
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
@@ -178,9 +178,9 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* Menu items with solid background */}
-              <div className="flex-1 flex flex-col bg-white overflow-y-auto">
-                <div className="flex flex-col p-4 space-y-1">
+              {/* Menu items container */}
+              <div className="flex-1 overflow-y-auto bg-white">
+                <nav className="flex flex-col p-4 space-y-2">
                   <a 
                     href="#about" 
                     onClick={(e) => {
@@ -211,14 +211,12 @@ export default function Home() {
                   >
                     {t.nav.survey}
                   </a>
-                </div>
+                </nav>
               </div>
               
-              {/* Language selector with solid background */}
-              <div className="mt-auto border-t border-gray-200 bg-white">
-                <div className="p-4 bg-white">
-                  <LanguageSelector />
-                </div>
+              {/* Language selector */}
+              <div className="border-t border-gray-200 p-4 bg-white">
+                <LanguageSelector />
               </div>
             </div>
           </div>
