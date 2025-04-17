@@ -11,6 +11,7 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,6 +71,29 @@ export default function Home() {
                 style={{ objectFit: 'contain' }}
               />
             </div>
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6 text-primary-dark"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isMobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+            {/* Desktop menu */}
             <div className="hidden md:flex space-x-8 text-lg">
               <a 
                 href="#about" 
@@ -93,6 +117,48 @@ export default function Home() {
                 {t.nav.survey}
               </a>
               <LanguageSelector />
+            </div>
+          </div>
+          {/* Mobile menu overlay */}
+          <div
+            className={`md:hidden fixed inset-0 z-50 bg-white transform transition-transform duration-300 ease-in-out ${
+              isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
+            <div className="flex flex-col items-center justify-center min-h-screen space-y-8 text-xl">
+              <a 
+                href="#about" 
+                onClick={(e) => {
+                  handleNavClick(e, 'about');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out"
+              >
+                {t.nav.about}
+              </a>
+              <a 
+                href="#benefits" 
+                onClick={(e) => {
+                  handleNavClick(e, 'benefits');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out"
+              >
+                {t.nav.benefits}
+              </a>
+              <a 
+                href="#survey" 
+                onClick={(e) => {
+                  handleNavClick(e, 'survey');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-primary-dark hover:text-primary-medium transition-all duration-300 ease-in-out"
+              >
+                {t.nav.survey}
+              </a>
+              <div className="mt-4">
+                <LanguageSelector />
+              </div>
             </div>
           </div>
         </div>
